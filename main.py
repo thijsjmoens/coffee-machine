@@ -117,7 +117,7 @@ def make_coffee(coffee):
     # Step 2: process the money for the coffee
     process_money(coffee)
 
-    # Step 3: Make Coffee and deducte ingredients from resources
+    # Step 3: Make Coffee and deduct ingredients from resources
     resources['water'] = resources['water'] - water
     resources['coffee'] = resources['coffee'] - coffee_beans
     
@@ -154,11 +154,11 @@ def print_report():
 # ---- ☕ THE COFFEE MACHINE --- 
 
 # Create a check variable for valid input of user
-check_valid_inpput = True
+check_valid_input = True
 
 # Check if the input of the user is valid
 # The input can be coffee (espresso/latte/cappuccino) or report or off
-while check_valid_inpput:
+while check_valid_input:
     
     # Ask the user for coffee with the prompt: What would you like? (espresso/latte/cappuccino):'
     input_user = input('What would you like? ')
@@ -191,4 +191,4 @@ while check_valid_inpput:
     else:
         
         # Set the check to false
-        check_valid_inpput = False
+        check_valid_input = False
