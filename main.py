@@ -4,7 +4,7 @@ MENU = {
             "water": 50,
             "coffee": 18,
         },
-        "cost": 1.5,
+        "cost": 1.50,
     },
     "latte": {
         "ingredients": {
@@ -12,7 +12,7 @@ MENU = {
             "milk": 150,
             "coffee": 24,
         },
-        "cost": 2.5,
+        "cost": 2.50,
     },
     "cappuccino": {
         "ingredients": {
@@ -20,7 +20,7 @@ MENU = {
             "milk": 100,
             "coffee": 24,
         },
-        "cost": 3.0,
+        "cost": 3.00,
     }
 }
 
@@ -50,10 +50,10 @@ def process_money(coffee):
     while not_enough_coins:
         
         # Ask the user for input
-        quarters = round(float(input("How many quarters?: ")), 2) # Must be float, quarters = $0.25
-        dimes =  round(float(input("How many dimes?: ")), 2) # Must be float, dimes = $0.10
-        nickles =  round(float(input("How many nickles?: ")), 2) # Must be float, nickles = $0.05
-        pennies =  round(float(input("How many pennies?: ")), 2) # Must be float, pennies = $0.01
+        quarters = round(float(input("How many quarters?: ")), 3) # Must be float, quarters = $0.25
+        dimes =  round(float(input("How many dimes?: ")), 3) # Must be float, dimes = $0.10
+        nickles =  round(float(input("How many nickles?: ")), 3) # Must be float, nickles = $0.05
+        pennies =  round(float(input("How many pennies?: ")), 3) # Must be float, pennies = $0.01
             
         # Calculate the monetary value of the coins inserted. E.g. 1 quarter, 2 dimes, 1 nickel, 2 pennies = 0.25 + 0.1 x 2 + 0.05 + 0.01 x 2 = $0.52
         total_inserted_money = (quarters * 0.25) + (dimes * 0.10) + (nickles * 0.05) + (pennies * 0.01)
@@ -69,14 +69,16 @@ def process_money(coffee):
         
     # Subtract cost price of the inserted money
     change = total_inserted_money - cost_price_coffee
-    change_in_dollars = round(change, 2)
+    change_in_dollars = round(change, 3)
     
     # Give back the change
     print(f"Here is ${change_in_dollars} in change.")
     
     # Add cost price to the resources
-    resources['money'] = cost_price_coffee
-    
+    if 'money' in resources:
+        resources['money'] = resources['money'] + cost_price_coffee    
+    else: 
+        resources['money'] = cost_price_coffee 
 
 # This function makes the coffee
 def make_coffee(coffee):
@@ -108,6 +110,28 @@ def make_coffee(coffee):
     print(f"Here's your {coffee} ☕ Enjoy!")
     
 
+# Function to print the report to the screen
+def print_report():
+    
+    # Assign resources to variables    
+    water = resources['water']
+    milk = resources['milk']    
+    coffee_beans = resources['coffee']
+        
+    # Check if there is any money yet
+    if 'money' in resources:
+        money = resources['money']     
+        print(money)  
+    else:
+        money = 0.00
+    
+    # Print the resources
+    print(f"Water: {water}ml")
+    print(f"Milk: {milk}ml")
+    print(f"Coffee: {coffee_beans}g")    
+    print(f"Money: ${resources['money']}")    
+
+
 
 # ---- ☕ THE COFFEE MACHINE --- 
 
@@ -117,7 +141,6 @@ check_valid_inpput = True
 # Check if the input of the user is valid
 # The input can be coffee (espresso/latte/cappuccino) or report or off
 while check_valid_inpput:
-
 
     # Ask the user for coffee with the prompt: What would you like? (espresso/latte/cappuccino):'
     ask_user = input('What would you like? ')
