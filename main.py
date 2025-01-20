@@ -36,28 +36,46 @@ resources = {
 # Function to process the money
 def process_money(coffee):
     
-    # Check the amount/price for the coffee
+    # Variable for checking enough coins
+    not_enough_coins = True
+    
+    # Check the price for the coffee
     cost_price_coffee = MENU[coffee]['cost']
     
-    # Ask the user for input
+    # Print the price of the coffee
+    print(f"This {coffee} costs ${cost_price_coffee}.")
     print('Please insert coins')
     
-    quarters = float(input("How many quarters?: ")) # Must be float, quarters = $0.25
-    dimes = float(input("How many dimes?: ")) # Must be float, dimes = $0.10
-    nickles = float(input("How many nickles?: ")) # Must be float, nickles = $0.05
-    pennies = float(input("How many pennies?: ")) # Must be float, pennies = $0.01
-        
-    # Calculate the monetary value of the coins inserted. E.g. 1 quarter, 2 dimes, 1 nickel, 2 pennies = 0.25 + 0.1 x 2 + 0.05 + 0.01 x 2 = $0.52
-    total_inserted_money = (quarters * 0.25) + (dimes * 0.10) + (nickles * 0.05) + (pennies * 0.01)
-    
     # Check if there is enough money added
-    if cost_price_coffee > total_inserted_money:
+    while not_enough_coins:
         
-        print("Sorry that's not enough money. Money refunded.")
+        # Ask the user for input
+        quarters = round(float(input("How many quarters?: ")), 2) # Must be float, quarters = $0.25
+        dimes =  round(float(input("How many dimes?: ")), 2) # Must be float, dimes = $0.10
+        nickles =  round(float(input("How many nickles?: ")), 2) # Must be float, nickles = $0.05
+        pennies =  round(float(input("How many pennies?: ")), 2) # Must be float, pennies = $0.01
+            
+        # Calculate the monetary value of the coins inserted. E.g. 1 quarter, 2 dimes, 1 nickel, 2 pennies = 0.25 + 0.1 x 2 + 0.05 + 0.01 x 2 = $0.52
+        total_inserted_money = (quarters * 0.25) + (dimes * 0.10) + (nickles * 0.05) + (pennies * 0.01)
+    
+        if cost_price_coffee > total_inserted_money:
+            
+            print("Sorry that's not enough money. Money refunded. Try again")
+            not_enough_coins = True
+            
+        else:
+            not_enough_coins = False
+            
         
     # Subtract cost price of the inserted money
+    change = total_inserted_money - cost_price_coffee
+    change_in_dollars = round(change, 2)
     
-    # 
+    # Give back the change
+    print(f"Here is ${change_in_dollars} in change.")
+    
+    # Add cost price to the resources
+    resources['money'] = cost_price_coffee
     
 
 # This function makes the coffee
@@ -78,22 +96,20 @@ def make_coffee(coffee):
     elif resources['coffee'] < coffee_beans: 
         print("Sorry there are not enough coffee beans.")
         
-    # Step 3: prompt the user to insert coins
+    # Step 3: process the money for the coffee
     process_money(coffee)
 
-    # Step 4: Check transaction successful?
-    
-    # Step 5: Make Coffee
-
-        # Deducte ingredients from resources
-        
-        # Assign resources and money to repor/stock
+    # Step 4: Make Coffee and deducte ingredients from resources
+    resources['water'] = resources['water'] - water
+    resources['milk'] = resources['milk'] - milk    
+    resources['coffee'] = resources['coffee'] - coffee_beans
         
     # Step 5: Print if coffee is ready
+    print(f"Here's your {coffee} ☕ Enjoy!")
     
 
 
-# ---- THE COFFEE MACHINE --- 
+# ---- ☕ THE COFFEE MACHINE --- 
 
 # Create a check variable for valid input of user
 check_valid_inpput = True
