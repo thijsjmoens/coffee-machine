@@ -30,14 +30,107 @@ resources = {
     "coffee": 100,
 }
 
-# TODO: 1. Print report of all the coffee resources
-# TODO: 2. Check resources sufficient to make drink order
 
-
-
-# 1. Ask the user for coffee with the prompt: What would you like? (espresso/latte/cappuccino):'
+# --- The functions ---
     
-    # Check the user’s input to decide what to do next.
+# Function to process the money
+def process_money(coffee):
+    
+    # Check the amount/price for the coffee
+    cost_price_coffee = MENU[coffee]['cost']
+    
+    # Ask the user for input
+    print('Please insert coins')
+    
+    quarters = float(input("How many quarters?: ")) # Must be float, quarters = $0.25
+    dimes = float(input("How many dimes?: ")) # Must be float, dimes = $0.10
+    nickles = float(input("How many nickles?: ")) # Must be float, nickles = $0.05
+    pennies = float(input("How many pennies?: ")) # Must be float, pennies = $0.01
+        
+    # Calculate the monetary value of the coins inserted. E.g. 1 quarter, 2 dimes, 1 nickel, 2 pennies = 0.25 + 0.1 x 2 + 0.05 + 0.01 x 2 = $0.52
+    total_inserted_money = (quarters * 0.25) + (dimes * 0.10) + (nickles * 0.05) + (pennies * 0.01)
+    
+    # Check if there is enough money added
+    if cost_price_coffee > total_inserted_money:
+        
+        print("Sorry that's not enough money. Money refunded.")
+        
+    # Subtract cost price of the inserted money
+    
+    # 
+    
+
+# This function makes the coffee
+def make_coffee(coffee):
+    
+    # Step 1: Check the ingredients of the coffee    
+    water = MENU[coffee]['ingredients']['water']
+    milk = MENU[coffee]['ingredients']['milk']
+    coffee_beans = MENU[coffee]['ingredients']['coffee'] 
+    
+    # Step 2: Check resources sufficient?
+    if resources['water'] < water:
+        print("Sorry there is not enough water.")
+        
+    elif resources['milk'] < milk: 
+        print("Sorry there is not enough milk.")
+        
+    elif resources['coffee'] < coffee_beans: 
+        print("Sorry there are not enough coffee beans.")
+        
+    # Step 3: prompt the user to insert coins
+    process_money(coffee)
+
+    # Step 4: Check transaction successful?
+    
+    # Step 5: Make Coffee
+
+        # Deducte ingredients from resources
+        
+        # Assign resources and money to repor/stock
+        
+    # Step 5: Print if coffee is ready
+    
+
+
+# ---- THE COFFEE MACHINE --- 
+
+# Create a check variable for valid input of user
+check_valid_inpput = True
+
+# Check if the input of the user is valid
+# The input can be coffee (espresso/latte/cappuccino) or report or off
+while check_valid_inpput:
+
+
+    # Ask the user for coffee with the prompt: What would you like? (espresso/latte/cappuccino):'
+    ask_user = input('What would you like? ')
+        
+    # If the user want coffee
+    if ask_user == 'espresso' or ask_user == 'latte' or ask_user == 'cappuccino':
+        
+        # Make the coffee
+        make_coffee(ask_user)
+        
+    # If the user wants a report
+    elif ask_user == 'report':
+        
+        # Print the report
+        print_report()
+        
+    # If the user want to shut off this machine
+    elif ask_user == 'off':
+        
+        # Shut down the machine
+        shut_machine()
+        
+    # If user gives a wrong input
+    else:
+        
+        # Set the check to false
+        check_valid_inpput = False
+        
+    
     
     # The prompt should show every time action has completed, e.g. once the drink is dispensed. The prompt should show again to serve the next customer.
     
