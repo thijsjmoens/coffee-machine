@@ -80,6 +80,7 @@ def process_money(coffee):
     else: 
         resources['money'] = cost_price_coffee 
 
+
 # This function makes the coffee
 def make_coffee(coffee):
     
@@ -121,7 +122,6 @@ def print_report():
     # Check if there is any money yet
     if 'money' in resources:
         money = resources['money']     
-        print(money)  
     else:
         money = 0.00
     
@@ -129,7 +129,7 @@ def print_report():
     print(f"Water: {water}ml")
     print(f"Milk: {milk}ml")
     print(f"Coffee: {coffee_beans}g")    
-    print(f"Money: ${resources['money']}")    
+    print(f"Money: ${money}")    
 
 
 
@@ -161,7 +161,7 @@ while check_valid_inpput:
     elif ask_user == 'off':
         
         # Shut down the machine
-        shut_machine()
+        exit()
         
     # If user gives a wrong input
     else:
